@@ -3,403 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elephant's Diary</title>
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <title>My-Diary-Website</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        header {
-            background-color: #4CAF50;
-            color: white;
+            background-color: #f0f0f0;
             text-align: center;
-            padding: 1em 0;
+            padding: 50px;
         }
-        .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
-            padding: 2em 0;
+        h1 {
+            color: #333;
         }
-        .profile {
-            text-align: center;
-            margin-bottom: 2em;
+        p {
+            font-size: 20px;
+            color: #666;
         }
-        .profile img {
-            border-radius: 50%;
-        }
-        .profile h1 {
-            margin: 0.5em 0;
-        }
-        .entry-form, .image-form {
-            background-color: white;
-            padding: 1em;
-            margin-bottom: 2em;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .diary {
-            background-color: white;
-            padding: 1em;
-            margin-bottom: 1em;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            position: relative;
-        }
-        .diary .delete-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: red;
-            color: white;
-            border: none;
-            padding: 5px;
-            cursor: pointer;
-        }
-        footer {
-            text-align: center;
-            padding: 1em 0;
-            background-color: #4CAF50;
-            color: white;
-        }
-        #editor {
-            height: 200px;
-        }
-        .diary-options {
-            text-align: center;
-            margin-bottom: 2em;
-        }
-        .diary-options button {
-            margin: 0 10px;
+        button {
             padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .hidden {
-            display: none;
-        }
-        .image-upload {
-            margin-bottom: 1em;
-        }
-        .image-upload input {
-            display: block;
-            margin-bottom: 1em;
-        }
-        .landmarks img {
-            width: 100%;
-            max-width: 300px;
-            margin: 10px;
-            display: inline-block;
-        }
-        .folder-structure {
-            border: 1px solid #ccc;
-            padding: 10px;
-            background-color: #fff;
-            max-height: 400px;
-            overflow-y: auto;
-            position: relative;
-        }
-        .folder-item {
-            margin: 5px 0;
-            padding: 5px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            cursor: pointer;
-            list-style-type: none;
-        }
-        .folder-item:hover {
-            background-color: #e9e9e9;
-        }
-        .add-folder-icon {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 24px;
-            height: 24px;
-            background-image: url('https://cdn-icons-png.flaticon.com/512/1828/1828817.png');
-            background-size: cover;
-            cursor: pointer;
-        }
-        .selected {
-            background-color: #e0e0e0;
-        }
-        .delete-button-fixed {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: red;
+            font-size: 18px;
             color: white;
+            background-color: #4CAF50;
             border: none;
-            padding: 10px;
-            font-size: 16px;
+            border-radius: 5px;
             cursor: pointer;
         }
-        ul, #myUL {
-            list-style-type: none;
-        }
-        .caret {
-            cursor: pointer;
-            user-select: none;
-        }
-        .caret::before {
-            content: "\25B6";
-            color: black;
-            display: inline-block;
-            margin-right: 6px;
-        }
-        .caret-down::before {
-            transform: rotate(90deg);
-        }
-        .nested {
-            display: none;
-        }
-        .active {
-            display: block;
+        button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
+    <h1>Welcome to My Diary Website</h1>
+    <p>This is my personal diary website where I will share my thoughts and experiences.</p>
+    <button onclick="alert('Button Clicked!')">Click Me</button>
 
-<header>
-    <h1>Elephant's Diary</h1>
-</header>
+    <div class="container">
+        <div class="profile">
+            <h1>Elephant</h1>
+            <p>Email: <a href="mailto:danyangjing12138@gmail.com">danyangjing12138@gmail.com</a></p>
+        </div>
 
-<div class="container">
-    <div class="profile">
-        <h1>Elephant</h1>
-        <p>Email: <a href="mailto:danyangjing12138@gmail.com">danyangjing12138@gmail.com</a></p>
+        <!-- Famous Landmarks -->
+        <div class="landmarks" id="landmarks">
+            <h2>Famous Landmarks</h2>
+        </div>
+
+        <!-- Diary Options -->
+        <div class="diary-options">
+            <button onclick="showTextDiary()">Text Diary</button>
+            <button onclick="showImageDiary()">Image Diary</button>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <select id="searchType">
+                <option value="folder">Search by Folder</option>
+                <option value="date">Search by Date</option>
+                <option value="keyword">Search by Keyword</option>
+            </select>
+            <input type="text" id="searchInput" placeholder="Search...">
+            <button onclick="searchDiary()">Search</button>
+        </div>
+
+        <!-- Text Diary Form -->
+        <div class="entry-form hidden" id="textDiaryForm">
+            <h2>Write a New Diary Entry</h2>
+            <form id="diaryForm">
+                <label for="entryDate">Date:</label><br>
+                <input type="date" id="entryDate" name="entryDate"><br><br>
+                <label for="entryContent">Content:</label><br>
+                <div id="editor"></div><br>
+                <label for="entryKeywords">Keywords:</label><br>
+                <input type="text" id="entryKeywords" name="entryKeywords" placeholder="Enter keywords separated by commas"><br><br>
+                <label for="folderSelect">Select Folder:</label><br>
+                <select id="folderSelect">
+                    <!-- Folders will be populated here -->
+                </select><br><br>
+                <input type="button" value="Add Entry" onclick="addTextEntry()">
+                <input type="button" value="Save Entry" onclick="saveTextEntry()">
+                <input type="button" value="Delete Entry" onclick="deleteTextEntry()">
+            </form>
+        </div>
+
+        <!-- Image Diary Form -->
+        <div class="image-form hidden" id="imageDiaryForm">
+            <h2>Write a New Image Diary Entry</h2>
+            <form id="imageForm">
+                <label for="imageDate">Date:</label><br>
+                <input type="date" id="imageDate" name="imageDate"><br><br>
+                <label for="imageUpload">Upload Image:</label><br>
+                <input type="file" id="imageUpload" name="imageUpload" accept="image/*"><br><br>
+                <label for="imageCaption">Caption:</label><br>
+                <textarea id="imageCaption" name="imageCaption" rows="4" cols="50"></textarea><br><br>
+                <label for="folderSelectImage">Select Folder:</label><br>
+                <select id="folderSelectImage">
+                    <!-- Folders will be populated here -->
+                </select><br><br>
+                <input type="button" value="Add Image Entry" onclick="addImageEntry()">
+            </form>
+        </div>
+
+        <!-- Folder Structure -->
+        <div class="folder-structure" id="folderStructure">
+            <div class="add-folder-icon" onclick="openModal()"></div>
+            <ul id="myUL">
+                <!-- Root folder -->
+                <li><span class="caret" onclick="selectFolder(event)">Root</span>
+                    <ul class="nested" id="folder-Root"></ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Diary Entries -->
+        <div id="diaryEntries">
+            <!-- Existing entries will be added here -->
+        </div>
     </div>
 
-    <!-- Famous Landmarks -->
-    <div class="landmarks" id="landmarks">
-        <h2>Famous Landmarks</h2>
+    <div class="trash-bin" id="trashBin"></div>
+
+    <!-- Delete Button -->
+    <button class="delete-button-fixed" onclick="confirmDelete()">Delete</button>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Choose how to add the new folder:</p>
+        <button onclick="addFolder('sameLevel')">Same Level</button>
+        <button onclick="addFolder('subLevel')">Sub Level</button>
+      </div>
     </div>
 
-    <!-- Diary Options -->
-    <div class="diary-options">
-        <button onclick="showTextDiary()">Text Diary</button>
-        <button onclick="showImageDiary()">Image Diary</button>
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="modal">
+      <div class="modal-content">
+        <span class="close-confirmation">&times;</span>
+        <p>Are you sure you want to delete the selected folder(s)?</p>
+        <button onclick="deleteFolders()">Yes</button>
+        <button onclick="closeConfirmationModal()">Cancel</button>
+      </div>
     </div>
 
-    <!-- Search Bar -->
-    <div class="search-bar">
-        <select id="searchType">
-            <option value="folder">Search by Folder</option>
-            <option value="date">Search by Date</option>
-            <option value="keyword">Search by Keyword</option>
-        </select>
-        <input type="text" id="searchInput" placeholder="Search...">
-        <button onclick="searchDiary()">Search</button>
+    <!-- Folder Selection Modal -->
+    <div id="saveEntryModal" class="modal">
+      <div class="modal-content">
+        <span class="close-save-entry">&times;</span>
+        <p>Select folder to save the entry:</p>
+        <select id="saveFolderSelect">
+          <!-- Folders will be populated here -->
+        </select><br><br>
+        <button onclick="confirmSaveEntry()">Save</button>
+        <button onclick="closeSaveEntryModal()">Cancel</button>
+      </div>
     </div>
 
-    <!-- Text Diary Form -->
-    <div class="entry-form hidden" id="textDiaryForm">
-        <h2>Write a New Diary Entry</h2>
-        <form id="diaryForm">
-            <label for="entryDate">Date:</label><br>
-            <input type="date" id="entryDate" name="entryDate"><br><br>
-            <label for="entryContent">Content:</label><br>
-            <div id="editor"></div><br>
-            <label for="entryKeywords">Keywords:</label><br>
-            <input type="text" id="entryKeywords" name="entryKeywords" placeholder="Enter keywords separated by commas"><br><br>
-            <label for="folderSelect">Select Folder:</label><br>
-            <select id="folderSelect">
-                <!-- Folders will be populated here -->
-            </select><br><br>
-            <input type="button" value="Add Entry" onclick="addTextEntry()">
-            <input type="button" value="Save Entry" onclick="saveTextEntry()">
-            <input type="button" value="Delete Entry" onclick="deleteTextEntry()">
-        </form>
-    </div>
+    <footer>
+        <p>&copy; 2024 Elephant's Diary</p>
+    </footer>
 
-    <!-- Image Diary Form -->
-    <div class="image-form hidden" id="imageDiaryForm">
-        <h2>Write a New Image Diary Entry</h2>
-        <form id="imageForm">
-            <label for="imageDate">Date:</label><br>
-            <input type="date" id="imageDate" name="imageDate"><br><br>
-            <label for="imageUpload">Upload Image:</label><br>
-            <input type="file" id="imageUpload" name="imageUpload" accept="image/*"><br><br>
-            <label for="imageCaption">Caption:</label><br>
-            <textarea id="imageCaption" name="imageCaption" rows="4" cols="50"></textarea><br><br>
-            <label for="folderSelectImage">Select Folder:</label><br>
-            <select id="folderSelectImage">
-                <!-- Folders will be populated here -->
-            </select><br><br>
-            <input type="button" value="Add Image Entry" onclick="addImageEntry()">
-        </form>
-    </div>
+    <!-- Include the Quill library from a CDN -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script>
+        var toolbarOptions = [
+            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+            ['blockquote', 'code-block'],
+            [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+            [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+            [{ 'direction': 'rtl' }],                         // text direction
+            [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+            [{ 'font': [] }],
+            [{ 'align': [] }],
+            ['clean']                                         // remove formatting button
+        ];
 
-    <!-- Folder Structure -->
-    <div class="folder-structure" id="folderStructure">
-        <div class="add-folder-icon" onclick="openModal()"></div>
-        <ul id="myUL">
-            <!-- Root folder -->
-            <li><span class="caret" onclick="selectFolder(event)">Root</span>
-                <ul class="nested" id="folder-Root"></ul>
-            </li>
-        </ul>
-    </div>
+        var quill = new Quill('#editor', {
+            modules: {
+                toolbar: toolbarOptions
+            },
+            theme: 'snow'
+        });
 
-    <!-- Diary Entries -->
-    <div id="diaryEntries">
-        <!-- Existing entries will be added here -->
-    </div>
-</div>
-
-<div class="trash-bin" id="trashBin"></div>
-
-<!-- Delete Button -->
-<button class="delete-button-fixed" onclick="confirmDelete()">Delete</button>
-
-<!-- The Modal -->
-<div id="myModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <p>Choose how to add the new folder:</p>
-    <button onclick="addFolder('sameLevel')">Same Level</button>
-    <button onclick="addFolder('subLevel')">Sub Level</button>
-  </div>
-</div>
-
-<!-- Confirmation Modal -->
-<div id="confirmationModal" class="modal">
-  <div class="modal-content">
-    <span class="close-confirmation">&times;</span>
-    <p>Are you sure you want to delete the selected folder(s)?</p>
-    <button onclick="deleteFolders()">Yes</button>
-    <button onclick="closeConfirmationModal()">Cancel</button>
-  </div>
-</div>
-
-<!-- Folder Selection Modal -->
-<div id="saveEntryModal" class="modal">
-  <div class="modal-content">
-    <span class="close-save-entry">&times;</span>
-    <p>Select folder to save the entry:</p>
-    <select id="saveFolderSelect">
-      <!-- Folders will be populated here -->
-    </select><br><br>
-    <button onclick="confirmSaveEntry()">Save</button>
-    <button onclick="closeSaveEntryModal()">Cancel</button>
-  </div>
-</div>
-
-<footer>
-    <p>&copy; 2024 Elephant's Diary</p>
-</footer>
-
-<!-- Include the Quill library from a CDN -->
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-<script>
-    var toolbarOptions = [
-        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-        ['blockquote', 'code-block'],
-        [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-        [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-        [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-        [{ 'direction': 'rtl' }],                         // text direction
-        [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-        [{ 'font': [] }],
-        [{ 'align': [] }],
-        ['clean']                                         // remove formatting button
-    ];
-
-    var quill = new Quill('#editor', {
-        modules: {
-            toolbar: toolbarOptions
-        },
-        theme: 'snow'
-    });
-
-    var folders = JSON.parse(localStorage.getItem('folders')) || {
-        "Root": {}
-    };
-
-    var entries = JSON.parse(localStorage.getItem('entries')) || {};
-
-    var currentFolder = 'Root';
-    var currentEntry = null;
-
-    function showTextDiary() {
-        document.getElementById('textDiaryForm').classList.remove('hidden');
-        document.getElementById('imageDiaryForm').classList.add('hidden');
-        updateFolderSelect();
-    }
-
-    function showImageDiary() {
-        document.getElementById('imageDiaryForm').classList.remove('hidden');
-        document.getElementById('textDiaryForm').classList.add('hidden');
-        updateFolderSelect();
-    }
-
-    function addTextEntry() {
-        var date = document.getElementById('entryDate').value;
-        var content = quill.root.innerHTML;
-        var keywords = document.getElementById('entryKeywords').value;
-        var folder = document.getElementById('folderSelect').value;
-        var timestamp = new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' });
-
-        if (date && content && folder) {
-            var entry = {
-                date: date,
-                content: content,
-                keywords: keywords,
-                timestamp: timestamp
-            };
-            if (!entries[folder]) {
-                entries[folder] = [];
-            }
-            entries[folder].push(entry);
-            saveEntries();
-
-            renderEntries(folder);
-            document.getElementById('diaryForm').reset();
-            quill.root.innerHTML = '';
-        } else {
-            alert('Please enter date, content, and select a folder.');
-        }
-    }
-
-    function saveTextEntry() {
-        currentEntry = {
-            date: document.getElementById('entryDate').value,
-            content: quill.root.innerHTML,
-            keywords: document.getElementById('entryKeywords').value,
-            timestamp: new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })
+        var folders = JSON.parse(localStorage.getItem('folders')) || {
+            "Root": {}
         };
-        openSaveEntryModal();
-    }
 
-    function deleteTextEntry() {
-        var entryDiv = document.querySelector('.diary');
-        if (entryDiv) {
-            entryDiv.remove();
-            saveEntries();
+        var entries = JSON.parse(localStorage.getItem('entries')) || {};
+
+        var currentFolder = 'Root';
+        var currentEntry = null;
+
+        function showTextDiary() {
+            document.getElementById('textDiaryForm').classList.remove('hidden');
+            document.getElementById('imageDiaryForm').classList.add('hidden');
+            updateFolderSelect();
         }
-    }
 
-    function addImageEntry() {
-        var date = document.getElementById('imageDate').value;
-        var fileInput = document.getElementById('imageUpload');
-        var caption = document.getElementById('imageCaption').value;
-        var folder = document.getElementById('folderSelectImage').value;
-        var timestamp = new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' });
+        function showImageDiary() {
+            document.getElementById('imageDiaryForm').classList.remove('hidden');
+            document.getElementById('textDiaryForm').classList.add('hidden');
+            updateFolderSelect();
+        }
 
-        if (date && fileInput.files.length > 0 && caption) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
+        function addTextEntry() {
+            var date = document.getElementById('entryDate').value;
+            var content = quill.root.innerHTML;
+            var keywords = document.getElementById('entryKeywords').value;
+            var folder = document.getElementById('folderSelect').value;
+            var timestamp = new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' });
+
+            if (date && content && folder) {
                 var entry = {
                     date: date,
-                    content: `<img src="${e.target.result}" alt="${caption}" style="max-width: 100%;">`,
-                    keywords: caption,
+                    content: content,
+                    keywords: keywords,
                     timestamp: timestamp
                 };
                 if (!entries[folder]) {
@@ -409,339 +231,387 @@
                 saveEntries();
 
                 renderEntries(folder);
-                document.getElementById('imageForm').reset();
+                document.getElementById('diaryForm').reset();
+                quill.root.innerHTML = '';
+            } else {
+                alert('Please enter date, content, and select a folder.');
+            }
+        }
+
+        function saveTextEntry() {
+            currentEntry = {
+                date: document.getElementById('entryDate').value,
+                content: quill.root.innerHTML,
+                keywords: document.getElementById('entryKeywords').value,
+                timestamp: new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })
             };
-            reader.readAsDataURL(fileInput.files[0]);
-        } else {
-            alert('Please enter date, select an image, and provide a caption.');
-        }
-    }
-
-    function createFolder(name, parent, level = 'sameLevel') {
-        var folder = document.createElement('li');
-        folder.className = 'folder-item';
-        folder.id = 'folder-' + name;
-        folder.setAttribute('draggable', true);
-        folder.ondragstart = dragStart;
-        folder.ondragover = dragOver;
-        folder.ondrop = drop;
-
-        var span = document.createElement('span');
-        span.className = 'caret';
-        span.onclick = selectFolder;
-        span.textContent = name;
-
-        var ul = document.createElement('ul');
-        ul.className = 'nested';
-
-        folder.appendChild(span);
-        folder.appendChild(ul);
-
-        if (level === 'sameLevel') {
-            parent.appendChild(folder);
-        } else {
-            parent.querySelector('.nested').appendChild(folder);
+            openSaveEntryModal();
         }
 
-        if (!folders[parent.id]) {
-            folders[parent.id] = {};
-        }
-        folders[parent.id][name] = {};
-        saveFolders();
-        updateFolderSelect(); // 确保更新下拉菜单
-    }
-
-    function updateFolderSelect() {
-        var folderSelect = document.getElementById('folderSelect');
-        var folderSelectImage = document.getElementById('folderSelectImage');
-        var saveFolderSelect = document.getElementById('saveFolderSelect');
-        folderSelect.innerHTML = ''; // 清空当前内容
-        folderSelectImage.innerHTML = '';
-        saveFolderSelect.innerHTML = '';
-        populateFolderOptions(folderSelect, folders.Root, 'Root');
-        populateFolderOptions(folderSelectImage, folders.Root, 'Root');
-        populateFolderOptions(saveFolderSelect, folders.Root, 'Root');
-    }
-
-    function populateFolderOptions(selectElement, folders, prefix) {
-        for (var folder in folders) {
-            var option = document.createElement('option');
-            option.value = prefix + '/' + folder;
-            option.textContent = prefix + '/' + folder;
-            selectElement.appendChild(option);
-            if (Object.keys(folders[folder]).length > 0) {
-                populateFolderOptions(selectElement, folders[folder], prefix + '/' + folder);
+        function deleteTextEntry() {
+            var entryDiv = document.querySelector('.diary');
+            if (entryDiv) {
+                entryDiv.remove();
+                saveEntries();
             }
         }
-    }
 
-    function loadLandmarkImages() {
-        var landmarkContainer = document.getElementById('landmarks');
-        for (var i = 0; i < 3; i++) {
-            var img = document.createElement('img');
-            img.src = `https://source.unsplash.com/random/300x200?landscape,${i}`;
-            img.alt = 'Landmark';
-            landmarkContainer.appendChild(img);
-        }
-    }
+        function addImageEntry() {
+            var date = document.getElementById('imageDate').value;
+            var fileInput = document.getElementById('imageUpload');
+            var caption = document.getElementById('imageCaption').value;
+            var folder = document.getElementById('folderSelectImage').value;
+            var timestamp = new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' });
 
-    function searchDiary() {
-        var searchType = document.getElementById('searchType').value;
-        var searchInput = document.getElementById('searchInput').value.toLowerCase();
-        var diaryEntries = document.getElementById('diaryEntries');
-        var entries = diaryEntries.getElementsByClassName('diary');
-        
-        for (var i = 0; i < entries.length; i++) {
-            var entry = entries[i];
-            entry.style.display = 'none';
-            if (searchType === 'folder') {
-                var folder = entry.parentElement.id.toLowerCase();
-                if (folder.includes(searchInput)) {
-                    entry.style.display = '';
-                }
-            } else if (searchType === 'date') {
-                var date = entry.querySelector('h2').textContent.toLowerCase();
-                if (date.includes(searchInput)) {
-                    entry.style.display = '';
-                }
-            } else if (searchType === 'keyword') {
-                var keywords = entry.querySelector('p').textContent.toLowerCase();
-                if (keywords.includes(searchInput)) {
-                    entry.style.display = '';
-                }
-            }
-        }
-    }
-
-    function dragStart(event) {
-        event.dataTransfer.setData('text', event.target.id);
-    }
-
-    function dragOver(event) {
-        event.preventDefault();
-    }
-
-    function drop(event) {
-        event.preventDefault();
-        var data = event.dataTransfer.getData('text');
-        var element = document.getElementById(data);
-        if (event.target.id === 'trashBin') {
-            element.remove();
-            deleteFolder(element.id.replace('folder-', ''));
-        }
-    }
-
-    function openModal() {
-        var selectedFolder = document.querySelector('.folder-item span.selected');
-        if (selectedFolder) {
-            currentFolder = selectedFolder.parentElement.id.replace('folder-', '');
-        } else {
-            currentFolder = 'Root';
-        }
-        var modal = document.getElementById('myModal');
-        modal.style.display = "block";
-    }
-
-    function addFolder(level) {
-        var folderName = prompt('Enter folder name:');
-        if (folderName) {
-            var parent = document.getElementById('folder-' + currentFolder);
-            createFolder(folderName, parent, level);
-            updateFolderSelect();
-        }
-        closeModal();
-    }
-
-    function closeModal() {
-        var modal = document.getElementById('myModal');
-        modal.style.display = "none";
-    }
-
-    function openSaveEntryModal() {
-        updateFolderSelect();
-        var modal = document.getElementById('saveEntryModal');
-        modal.style.display = "block";
-    }
-
-    function closeSaveEntryModal() {
-        var modal = document.getElementById('saveEntryModal');
-        modal.style.display = "none";
-    }
-
-    function confirmSaveEntry() {
-        var folder = document.getElementById('saveFolderSelect').value;
-        if (currentEntry && folder) {
-            if (!entries[folder]) {
-                entries[folder] = [];
-            }
-            entries[folder].push(currentEntry);
-            saveEntries();
-
-            renderEntries(folder);
-            closeSaveEntryModal();
-            document.getElementById('diaryForm').reset();
-            quill.root.innerHTML = '';
-            currentEntry = null;
-        } else {
-            alert('Please select a folder to save the entry.');
-        }
-    }
-
-    function selectFolder(event) {
-        if (event.target.classList.contains('selected')) {
-            event.target.classList.remove('selected');
-            event.target.parentElement.querySelector('.nested').classList.remove('active');
-            event.target.classList.remove('caret-down');
-            renderEntries('Root');  // Clear entries when no folder is selected
-        } else {
-            var folders = document.querySelectorAll('.folder-item span');
-            folders.forEach(function(folder) {
-                folder.classList.remove('selected');
-            });
-            event.target.classList.add('selected');
-            event.target.parentElement.querySelector('.nested').classList.toggle('active');
-            event.target.classList.toggle('caret-down');
-            renderEntries(event.target.textContent);
-        }
-    }
-
-    function confirmDelete() {
-        var modal = document.getElementById('confirmationModal');
-        modal.style.display = "block";
-    }
-
-    function closeConfirmationModal() {
-        var modal = document.getElementById('confirmationModal');
-        modal.style.display = "none";
-    }
-
-    function deleteFolders() {
-        var selectedFolders = document.querySelectorAll('.folder-item span.selected');
-        selectedFolders.forEach(function(folder) {
-            var folderId = folder.parentElement.id.replace('folder-', '');
-            folder.parentElement.remove();
-            deleteFolder(folderId);
-        });
-        closeConfirmationModal();
-    }
-
-    function deleteFolder(folderId) {
-        var parts = folderId.split('/');
-        var currentFolders = folders;
-        for (var i = 1; i < parts.length - 1; i++) {
-            currentFolders = currentFolders[parts[i]];
-        }
-        delete currentFolders[parts[parts.length - 1]];
-        saveFolders();
-        updateFolderSelect(); // 更新下拉菜单
-    }
-
-    function saveFolders() {
-        localStorage.setItem('folders', JSON.stringify(folders));
-    }
-
-    function loadFolders() {
-        var root = document.getElementById('folder-Root');
-        root.innerHTML = '';
-        Object.keys(folders.Root).forEach(function(folder) {
-            createFolder(folder, root, 'sameLevel');
-        });
-    }
-
-    function saveEntries() {
-        localStorage.setItem('entries', JSON.stringify(entries));
-    }
-
-    function loadEntries() {
-        var diaryEntries = localStorage.getItem('entries');
-        if (diaryEntries) {
-            entries = JSON.parse(diaryEntries);
-            Object.keys(entries).forEach(folder => {
-                renderEntries(folder);
-            });
-        }
-    }
-
-    function renderEntries(folder) {
-        var diaryEntries = document.getElementById('diaryEntries');
-        diaryEntries.innerHTML = '';
-        if (entries[folder]) {
-            entries[folder].forEach(entry => {
-                var entryDiv = document.createElement('div');
-                entryDiv.className = 'diary';
-
-                var entryDate = document.createElement('h2');
-                entryDate.textContent = 'Diary Entry - ' + entry.date + ' (' + entry.timestamp + ')';
-                entryDiv.appendChild(entryDate);
-
-                var entryKeywords = document.createElement('p');
-                entryKeywords.textContent = 'Keywords: ' + entry.keywords;
-                entryDiv.appendChild(entryKeywords);
-
-                var entryContent = document.createElement('p');
-                entryContent.innerHTML = entry.content;
-                entryDiv.appendChild(entryContent);
-
-                var deleteButton = document.createElement('button');
-                deleteButton.className = 'delete-button';
-                deleteButton.textContent = 'Delete';
-                deleteButton.onclick = function() {
-                    entryDiv.remove();
-                    entries[folder] = entries[folder].filter(e => e !== entry);
+            if (date && fileInput.files.length > 0 && caption) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var entry = {
+                        date: date,
+                        content: `<img src="${e.target.result}" alt="${caption}" style="max-width: 100%;">`,
+                        keywords: caption,
+                        timestamp: timestamp
+                    };
+                    if (!entries[folder]) {
+                        entries[folder] = [];
+                    }
+                    entries[folder].push(entry);
                     saveEntries();
-                };
-                entryDiv.appendChild(deleteButton);
 
-                diaryEntries.appendChild(entryDiv);
+                    renderEntries(folder);
+                    document.getElementById('imageForm').reset();
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                alert('Please enter date, select an image, and provide a caption.');
+            }
+        }
+
+        function createFolder(name, parent, level = 'sameLevel') {
+            var folder = document.createElement('li');
+            folder.className = 'folder-item';
+            folder.id = 'folder-' + name;
+            folder.setAttribute('draggable', true);
+            folder.ondragstart = dragStart;
+            folder.ondragover = dragOver;
+            folder.ondrop = drop;
+
+            var span = document.createElement('span');
+            span.className = 'caret';
+            span.onclick = selectFolder;
+            span.textContent = name;
+
+            var ul = document.createElement('ul');
+            ul.className = 'nested';
+
+            folder.appendChild(span);
+            folder.appendChild(ul);
+
+            if (level === 'sameLevel') {
+                parent.appendChild(folder);
+            } else {
+                parent.querySelector('.nested').appendChild(folder);
+            }
+
+            if (!folders[parent.id]) {
+                folders[parent.id] = {};
+            }
+            folders[parent.id][name] = {};
+            saveFolders();
+            updateFolderSelect(); // 确保更新下拉菜单
+        }
+
+        function updateFolderSelect() {
+            var folderSelect = document.getElementById('folderSelect');
+            var folderSelectImage = document.getElementById('folderSelectImage');
+            var saveFolderSelect = document.getElementById('saveFolderSelect');
+            folderSelect.innerHTML = ''; // 清空当前内容
+            folderSelectImage.innerHTML = '';
+            saveFolderSelect.innerHTML = '';
+            populateFolderOptions(folderSelect, folders.Root, 'Root');
+            populateFolderOptions(folderSelectImage, folders.Root, 'Root');
+            populateFolderOptions(saveFolderSelect, folders.Root, 'Root');
+        }
+
+        function populateFolderOptions(selectElement, folders, prefix) {
+            for (var folder in folders) {
+                var option = document.createElement('option');
+                option.value = prefix + '/' + folder;
+                option.textContent = prefix + '/' + folder;
+                selectElement.appendChild(option);
+                if (Object.keys(folders[folder]).length > 0) {
+                    populateFolderOptions(selectElement, folders[folder], prefix + '/' + folder);
+                }
+            }
+        }
+
+        function loadLandmarkImages() {
+            var landmarkContainer = document.getElementById('landmarks');
+            for (var i = 0; i < 3; i++) {
+                var img = document.createElement('img');
+                img.src = `https://source.unsplash.com/random/300x200?landscape,${i}`;
+                img.alt = 'Landmark';
+                landmarkContainer.appendChild(img);
+            }
+        }
+
+        function searchDiary() {
+            var searchType = document.getElementById('searchType').value;
+            var searchInput = document.getElementById('searchInput').value.toLowerCase();
+            var diaryEntries = document.getElementById('diaryEntries');
+            var entries = diaryEntries.getElementsByClassName('diary');
+            
+            for (var i = 0; i < entries.length; i++) {
+                var entry = entries[i];
+                entry.style.display = 'none';
+                if (searchType === 'folder') {
+                    var folder = entry.parentElement.id.toLowerCase();
+                    if (folder.includes(searchInput)) {
+                        entry.style.display = '';
+                    }
+                } else if (searchType === 'date') {
+                    var date = entry.querySelector('h2').textContent.toLowerCase();
+                    if (date.includes(searchInput)) {
+                        entry.style.display = '';
+                    }
+                } else if (searchType === 'keyword') {
+                    var keywords = entry.querySelector('p').textContent.toLowerCase();
+                    if (keywords.includes(searchInput)) {
+                        entry.style.display = '';
+                    }
+                }
+            }
+        }
+
+        function dragStart(event) {
+            event.dataTransfer.setData('text', event.target.id);
+        }
+
+        function dragOver(event) {
+            event.preventDefault();
+        }
+
+        function drop(event) {
+            event.preventDefault();
+            var data = event.dataTransfer.getData('text');
+            var element = document.getElementById(data);
+            if (event.target.id === 'trashBin') {
+                element.remove();
+                deleteFolder(element.id.replace('folder-', ''));
+            }
+        }
+
+        function openModal() {
+            var selectedFolder = document.querySelector('.folder-item span.selected');
+            if (selectedFolder) {
+                currentFolder = selectedFolder.parentElement.id.replace('folder-', '');
+            } else {
+                currentFolder = 'Root';
+            }
+            var modal = document.getElementById('myModal');
+            modal.style.display = "block";
+        }
+
+        function addFolder(level) {
+            var folderName = prompt('Enter folder name:');
+            if (folderName) {
+                var parent = document.getElementById('folder-' + currentFolder);
+                createFolder(folderName, parent, level);
+                updateFolderSelect();
+            }
+            closeModal();
+        }
+
+        function closeModal() {
+            var modal = document.getElementById('myModal');
+            modal.style.display = "none";
+        }
+
+        function openSaveEntryModal() {
+            updateFolderSelect();
+            var modal = document.getElementById('saveEntryModal');
+            modal.style.display = "block";
+        }
+
+        function closeSaveEntryModal() {
+            var modal = document.getElementById('saveEntryModal');
+            modal.style.display = "none";
+        }
+
+        function confirmSaveEntry() {
+            var folder = document.getElementById('saveFolderSelect').value;
+            if (currentEntry && folder) {
+                if (!entries[folder]) {
+                    entries[folder] = [];
+                }
+                entries[folder].push(currentEntry);
+                saveEntries();
+
+                renderEntries(folder);
+                closeSaveEntryModal();
+                document.getElementById('diaryForm').reset();
+                quill.root.innerHTML = '';
+                currentEntry = null;
+            } else {
+                alert('Please select a folder to save the entry.');
+            }
+        }
+
+        function selectFolder(event) {
+            if (event.target.classList.contains('selected')) {
+                event.target.classList.remove('selected');
+                event.target.parentElement.querySelector('.nested').classList.remove('active');
+                event.target.classList.remove('caret-down');
+                renderEntries('Root');  // Clear entries when no folder is selected
+            } else {
+                var folders = document.querySelectorAll('.folder-item span');
+                folders.forEach(function(folder) {
+                    folder.classList.remove('selected');
+                });
+                event.target.classList.add('selected');
+                event.target.parentElement.querySelector('.nested').classList.toggle('active');
+                event.target.classList.toggle('caret-down');
+                renderEntries(event.target.textContent);
+            }
+        }
+
+        function confirmDelete() {
+            var modal = document.getElementById('confirmationModal');
+            modal.style.display = "block";
+        }
+
+        function closeConfirmationModal() {
+            var modal = document.getElementById('confirmationModal');
+            modal.style.display = "none";
+        }
+
+        function deleteFolders() {
+            var selectedFolders = document.querySelectorAll('.folder-item span.selected');
+            selectedFolders.forEach(function(folder) {
+                var folderId = folder.parentElement.id.replace('folder-', '');
+                folder.parentElement.remove();
+                deleteFolder(folderId);
+            });
+            closeConfirmationModal();
+        }
+
+        function deleteFolder(folderId) {
+            var parts = folderId.split('/');
+            var currentFolders = folders;
+            for (var i = 1; i < parts.length - 1; i++) {
+                currentFolders = currentFolders[parts[i]];
+            }
+            delete currentFolders[parts[parts.length - 1]];
+            saveFolders();
+            updateFolderSelect(); // 更新下拉菜单
+        }
+
+        function saveFolders() {
+            localStorage.setItem('folders', JSON.stringify(folders));
+        }
+
+        function loadFolders() {
+            var root = document.getElementById('folder-Root');
+            root.innerHTML = '';
+            Object.keys(folders.Root).forEach(function(folder) {
+                createFolder(folder, root, 'sameLevel');
             });
         }
-    }
 
-    document.addEventListener('DOMContentLoaded', function () {
-        loadLandmarkImages();
-        loadFolders();
-        loadEntries();
-        updateFolderSelect();
+        function saveEntries() {
+            localStorage.setItem('entries', JSON.stringify(entries));
+        }
 
-        var trashBin = document.getElementById('trashBin');
-        trashBin.ondragover = dragOver;
-        trashBin.ondrop = drop;
-
-        var modal = document.getElementById('myModal');
-        var span = document.getElementsByClassName('close')[0];
-        span.onclick = closeModal;
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                closeModal();
+        function loadEntries() {
+            var diaryEntries = localStorage.getItem('entries');
+            if (diaryEntries) {
+                entries = JSON.parse(diaryEntries);
+                Object.keys(entries).forEach(folder => {
+                    renderEntries(folder);
+                });
             }
         }
 
-        var confirmationModal = document.getElementById('confirmationModal');
-        var closeConfirmationSpan = document.getElementsByClassName('close-confirmation')[0];
-        closeConfirmationSpan.onclick = closeConfirmationModal;
-        window.onclick = function(event) {
-            if (event.target == confirmationModal) {
-                closeConfirmationModal();
+        function renderEntries(folder) {
+            var diaryEntries = document.getElementById('diaryEntries');
+            diaryEntries.innerHTML = '';
+            if (entries[folder]) {
+                entries[folder].forEach(entry => {
+                    var entryDiv = document.createElement('div');
+                    entryDiv.className = 'diary';
+
+                    var entryDate = document.createElement('h2');
+                    entryDate.textContent = 'Diary Entry - ' + entry.date + ' (' + entry.timestamp + ')';
+                    entryDiv.appendChild(entryDate);
+
+                    var entryKeywords = document.createElement('p');
+                    entryKeywords.textContent = 'Keywords: ' + entry.keywords;
+                    entryDiv.appendChild(entryKeywords);
+
+                    var entryContent = document.createElement('p');
+                    entryContent.innerHTML = entry.content;
+                    entryDiv.appendChild(entryContent);
+
+                    var deleteButton = document.createElement('button');
+                    deleteButton.className = 'delete-button';
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.onclick = function() {
+                        entryDiv.remove();
+                        entries[folder] = entries[folder].filter(e => e !== entry);
+                        saveEntries();
+                    };
+                    entryDiv.appendChild(deleteButton);
+
+                    diaryEntries.appendChild(entryDiv);
+                });
             }
         }
 
-        var saveEntryModal = document.getElementById('saveEntryModal');
-        var closeSaveEntrySpan = document.getElementsByClassName('close-save-entry')[0];
-        closeSaveEntrySpan.onclick = closeSaveEntryModal;
-        window.onclick = function(event) {
-            if (event.target == saveEntryModal) {
-                closeSaveEntryModal();
-            }
-        }
+        document.addEventListener('DOMContentLoaded', function () {
+            loadLandmarkImages();
+            loadFolders();
+            loadEntries();
+            updateFolderSelect();
 
-        var folderStructure = document.getElementById('folderStructure');
-        folderStructure.addEventListener('click', function(event) {
-            if (event.target.classList.contains('folder-item')) {
-                selectFolder(event);
+            var trashBin = document.getElementById('trashBin');
+            trashBin.ondragover = dragOver;
+            trashBin.ondrop = drop;
+
+            var modal = document.getElementById('myModal');
+            var span = document.getElementsByClassName('close')[0];
+            span.onclick = closeModal;
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    closeModal();
+                }
             }
+
+            var confirmationModal = document.getElementById('confirmationModal');
+            var closeConfirmationSpan = document.getElementsByClassName('close-confirmation')[0];
+            closeConfirmationSpan.onclick = closeConfirmationModal;
+            window.onclick = function(event) {
+                if (event.target == confirmationModal) {
+                    closeConfirmationModal();
+                }
+            }
+
+            var saveEntryModal = document.getElementById('saveEntryModal');
+            var closeSaveEntrySpan = document.getElementsByClassName('close-save-entry')[0];
+            closeSaveEntrySpan.onclick = closeSaveEntryModal;
+            window.onclick = function(event) {
+                if (event.target == saveEntryModal) {
+                    closeSaveEntryModal();
+                }
+            }
+
+            var folderStructure = document.getElementById('folderStructure');
+            folderStructure.addEventListener('click', function(event) {
+                if (event.target.classList.contains('folder-item')) {
+                    selectFolder(event);
+                }
+            });
         });
-    });
-</script>
+    </script>
 
 </body>
 </html>
